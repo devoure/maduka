@@ -11,6 +11,22 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
   <script type="text/javascript">
     var user = '{{ request.user }}'
+    function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
   </script>
 
 
@@ -36,7 +52,7 @@
 	     	<a href="{% url 'cart' %}">
 	    		<img  id="cart-icon" src="{% static 'img/cart.png' %}">
 	    	</a>
-	    	<p id="cart-total">0</p>
+        <p id="cart-total">{{ cartitems }}</p>
 
 	    </div>
 	  </div>
